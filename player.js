@@ -8,6 +8,10 @@ function Player() {
     this.step = 3;
     this.maxDiff = 100;
 
+    this.aimAngle = 0;
+    this.aimX = 0;
+    this.aimY = 0;
+
     // Has dodge button (spacebar) been pressed?
     this.isDodge  = false;
     
@@ -19,9 +23,16 @@ function Player() {
 
     // Draw player in current position
     this.show = function() {
+        // Draw player
         fill("yellow");
+        stroke("black");
         strokeWeight(2);
         circle(this.x, this.y, 10);
+
+        // Draw sighline
+        strokeWeight(1);
+        stroke("red");
+        line(this.x, this.y, this.aimX, this.aimY);
     }
     
     // Update player location
@@ -34,6 +45,12 @@ function Player() {
         
         var dy = this.targetY - this.y;
         this.y += dy * this.acc;
+
+        // Calculate Aim direction based on mouse
+        l = w + h;
+        this.aimAngle = Math.atan2((mouseY - this.y), (mouseX - this.x))
+        this.aimX = this.x + l * Math.cos(this.aimAngle);
+        this.aimY = this.y + l * Math.sin(this.aimAngle);
     }
 
     // Change target position of movement
