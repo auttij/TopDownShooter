@@ -11,6 +11,7 @@ function Player() {
     this.aimAngle = 0;
     this.aimX = 0;
     this.aimY = 0;
+    this.aimAcc = 0.1; // Aim acceleration multiplier, how fast aim follows the mouse
 
     // Has dodge button (spacebar) been pressed?
     this.isDodge  = false;
@@ -47,8 +48,25 @@ function Player() {
         this.y += dy * this.acc;
 
         // Calculate Aim direction based on mouse
+        targetAngle = Math.atan2((mouseY - this.y), (mouseX - this.x));
+
+        // Calculate the amount that angle changes each frame.
+        diffAngle = targetAngle - this.aimAngle;
+        // Limit the angle change so it stays between [-PI, PI]
+        // Necessary to always use the shorterst distances and not loop the wrong way round
+        diffAngle -= diffAngle > Math.PI ? 2 * Math.PI : 0;
+        diffAngle += diffAngle < -Math.PI ? 2 * Math.PI : 0;
+
+        // Update the aim angle
+        this.aimAngle += diffAngle * this.aimAcc;
+        // Limit the angle so it stays between [-PI, PI]
+        // Necessary to always use the shorterst distances and not loop the wrong way round
+        this.aimAngle -= this.aimAngle > Math.PI ? 2 * Math.PI : 0;
+        this.aimAngle += this.aimAngle < -Math.PI ? 2 * Math.PI : 0;
+
+        // Length of sightline
         l = w + h;
-        this.aimAngle = Math.atan2((mouseY - this.y), (mouseX - this.x))
+        // Update end positions of sightline
         this.aimX = this.x + l * Math.cos(this.aimAngle);
         this.aimY = this.y + l * Math.sin(this.aimAngle);
     }
