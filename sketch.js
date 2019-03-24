@@ -35,7 +35,7 @@ function keyPressed() {
 function mouseClicked() {
     //let obj = new WorldObject(world, mouseX - 20, mouseX + 20, mouseY - 20, mouseY + 20);
     //world.objects.push(obj);
-    console.log(world.box.getQuad(mouseX, mouseY));
+    console.log(world.box.getQuadDeep(mouseX, mouseY));
 }
 
 function keyReleased() {
@@ -46,7 +46,7 @@ function World(worldWidth, worldHeight) {
     this.width = worldWidth;
     this.height = worldHeight;
     this.objects = [];
-    this.box = new BoundingBox(0, 0, worldWidth, worldHeight, 1, true);
+    this.box = new BoundingBox(0, 0, worldWidth, worldHeight, 0, true);
 
     this.draw = function() {
         this.box.draw();
