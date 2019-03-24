@@ -38,6 +38,11 @@ function Player() {
     
     // Update player location
     this.update = function() {
+        this.move();
+        this.aim();
+    }
+
+    this.move = function() {
         this.checkMovement();
 
         // Movement is done by moving towards target location
@@ -46,7 +51,9 @@ function Player() {
         
         var dy = this.targetY - this.y;
         this.y += dy * this.acc;
+    }
 
+    this.aim = function() {
         // Calculate Aim direction based on mouse
         targetAngle = Math.atan2((mouseY - this.y), (mouseX - this.x));
 
