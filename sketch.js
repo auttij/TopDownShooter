@@ -46,7 +46,7 @@ function World(worldWidth, worldHeight) {
     this.width = worldWidth;
     this.height = worldHeight;
     this.objects = [];
-    this.box = new BoundingBox(0, 0, worldWidth, worldHeight, 0, true);
+    this.box = new BoundingBox(0, 0, worldWidth, worldHeight, 0, false);
 
     this.draw = function() {
         this.box.draw();

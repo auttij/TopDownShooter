@@ -47,7 +47,6 @@ class BoundingBox {
     // Splits this Bounding box into 4 new quadrants
     createQuads = function() {
         if (this.width >= this.sizeLimit && this.height >= this.sizeLimit) {
-            console.log("created new quads with width", this.width);
             this.quads = new Array(4);
             var i;
             for (i = 0; i < 4; i++) {
@@ -101,8 +100,14 @@ class BoundingBox {
         return null;
     }
 
-    // Draws lines around each bounding box
+    // Draw Boundin Box contents
     draw = function() {
+        this.drawQuads();
+        this.drawObjects();
+    }
+
+    // if debuggin is active, draws lines around each bounding box
+    drawQuads = function() {
         if (this.debug) {
             fill(155);
             stroke(0);
@@ -113,15 +118,24 @@ class BoundingBox {
             if (this.quads) {
                 var i;
                 for (i = 0; i < 4; i++) {
-                    this.quads[i].draw();
+                    this.quads[i].drawQuads();
                 }
             }
         }
+    }
+
+    // Draw objects of each bounding box recursivelya
+    drawObjects = function() {
         if (this.object) {
             fill(255);
             stroke(0);
             strokeWeight(1);
             circle(this.object[0], this.object[1], 4);
+        } else if (this.quads) {
+            var i;
+                for (i = 0; i < 4; i++) {
+                    this.quads[i].drawObjects();
+                }
         }
     }
 }
